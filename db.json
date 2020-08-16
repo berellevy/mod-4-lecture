@@ -1,0 +1,91 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "instructors": [
+    {
+      "id": 1,
+      "name": "Berel",
+      "AnimeLoves": false
+    },
+    {
+      "id": 2,
+      "name": "Corey",
+      "AnimeLoves": false
+    },
+    {
+      "id": 3,
+      "name": "Liam",
+      "AnimeLoves": false
+    },
+    {
+      "name": "berel",
+      "mod": "1",
+      "id": 5
+    },
+    {
+      "name": "hello",
+      "mod": "2",
+      "id": 6
+    },
+    {
+      "name": "",
+      "mod": "",
+      "id": 7
+    },
+    {
+      "name": "hello poop",
+      "mod": "3",
+      "id": 8
+    },
+    {
+      "name": "shver",
+      "mod": "",
+      "id": 9
+    },
+    {
+      "name": "hello",
+      "mod": "",
+      "id": 10
+    },
+    {
+      "name": "",
+      "mod": "",
+      "id": 11
+    },
+    {
+      "name": "b",
+      "mod": "",
+      "id": 12
+    },
+    {
+      "name": "asdf",
+      "mod": "",
+      "id": 13
+    },
+    {
+      "name": "asdf",
+      "mod": "",
+      "id": 14
+    },
+    {
+      "name": "poo",
+      "mod": "",
+      "id": 15
+    }
+  ]
+}

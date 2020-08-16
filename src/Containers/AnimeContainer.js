@@ -1,13 +1,13 @@
 import React from 'react'
-import TeacherCard from '../Components/TeacherCard'
+import Instructor from '../Components/Instructor'
 
 
 function AnimeContainer(props) {
-    let teachers = props.teachers.map(t=> <TeacherCard key={t.id} teacher={t}/>)
+    let instructors = props.instructors.map(instructorObj=> <Instructor key={instructorObj.id} instructor={instructorObj}/>)
     return (
         <>
-            <h1>Animeys</h1>
-            {teachers}
+            <h1>Anime Container</h1>
+            {instructors}
         </>
     ) 
 }

@@ -3,40 +3,95 @@ import './App.css';
 import Header from './Components/Header'
 import InstructorContainer from './Containers/InstructorContainer'
 import AnimeContainer from './Containers/AnimeContainer'
-import {Route, Switch} from 'react-router-dom'
+import {Route, Switch, withRouter} from 'react-router-dom'
 import Welcome from './Components/Welcome';
+import Search from './Components/Search';
+import fetcher from "./fetcher";
+import Navbar from './Components/NavBar';
+let api = "http://localhost:3000/instructors"
+
 
 
 
 class App extends Component {
   state = {
-    names: [
-      {id: 1, name: "Berel", AnimeLoves: false},
-      {id: 2, name: "Corey", AnimeLoves: false},
-      {id: 3, name: "Liam", AnimeLoves: false}
-    ]
-
+    names: [],
+    searchValue: ""
   }
 
-  // AnimeLover = (id) => {
-  //   console.log("animeLover", " id: ", id)
-  // }
+  componentDidMount() {
+    fetcher(api, this.inStateInstructors)
+  }
+
+  inStateInstructors = (data) => {
+    this.setState({ names: data})
+  }
+
+  searchHandler = (e) => {
+    let { value } = e.target
+    this.setState({ searchValue: value})
+  }
+
+  appClickHandler = () => {
+    console.log("%c In App!", "color: red");
+  }
+
+ submitHandler = (obj) => {
+   fetcher(api, this.addNewInstructor, {method: "POST", body: obj})
+ }
+ 
+ addNewInstructor = (obj) => {
+  this.setState({ names: [...this.state.names, obj]})
+  this.props.history.push(`/instructors/${obj.id}`)
+ } 
+
+ filteredInstructors = () => {
+   let { names, searchValue } = this.state
+   console.log(names);
+   if (searchValue) {
+    return names.filter(instructor => instructor.name.toLowerCase().includes(searchValue.toLowerCase()))
+   } else {
+    return names
+   }
+ }
   
   
   render() {
+    let { names, searchValue } = this.state
     return (
-        <div> 
-            <Header /> 
-            <Switch>
-                <Route path="/welcome" component={Welcome}/>
-                <Route path="/instructors/anime" render={() => <AnimeContainer teachers={this.state.names}/> } />
-                <Route path="/instructors" render={() => <InstructorContainer AnimeLover={this.AnimeLover} teachers={this.state.names}/>}/>
-            </Switch>
-            
+        
+      <div> 
+          {names.length === 0 ? <h1>LOADING INSTRUCTORS</h1> :
+          <>  
+              <Navbar/>
+              <Header /> 
+              <Switch>
+                  <Route 
+                    path="/welcome"
+                    component={Welcome}
+                  />
+
+                  <Route path="/anime" render={() => (
+                    <AnimeContainer instructors={this.filteredInstructors()}/> 
+                  )} />
+                  
+                  <Route path="/instructors" render={() => (
+                      <InstructorContainer 
+                          appClickHandler={this.appClickHandler} 
+                          instructors={this.filteredInstructors()} 
+                          submitHandler={this.submitHandler}
+                          searchHandler={this.searchHandler}
+                          searchValue={searchValue}
+                      />
+                  )}/>
+              </Switch>
+          </>
+            }
         </div>
+            
     );
 
   }
 }
 
-export default App;
+export default withRouter(App);

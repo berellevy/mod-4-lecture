@@ -14,15 +14,13 @@ class Header extends Component {
     }
 
     clickHandler = () => {
-        let color = this.state.color
+        let color = {...this.state}.color
         let newColor = this.color[color]
         this.setState({color: newColor})
-        console.log(this.state)
-        
     }
         
     render () {
-        return <h1 onClick={this.clickHandler} style={{"background-color": `${this.state.color}`}}>Welcome to Apps</h1>
+        return <h1 onClick={this.clickHandler} style={{backgroundColor: `${this.state.color}`}}>Welcome to Apps</h1>
     }
 }
 

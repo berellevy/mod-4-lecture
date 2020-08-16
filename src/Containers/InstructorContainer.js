@@ -1,25 +1,43 @@
-import React from 'react'
-import TeacherCard from '../Components/TeacherCard'
-import {Route} from 'react-router-dom'
+import React, { Component } from 'react'
+import Instructor from '../Components/Instructor'
+import {Route, Switch} from 'react-router-dom'
+import Form from '../Components/Form'
+import Search from '../Components/Search'
 
-function InstructorContainer({teachers, AnimeLover}) {
+class InstructorContainer extends Component {
+   
+    render() {
+        let { instructors, appClickHandler, submitHandler, searchHandler, searchValue } = this.props
 
-    return (
-        <>
+        let instructorCards = instructors.map(instructorObj => (
+            <Instructor 
+                key={instructorObj.id} 
+                instructor={instructorObj} 
+                appClickHandler={appClickHandler}
+            />
+        ))
 
-            <Route exact path="/instructors/:id" render={ ({match}) => {
-                let id = parseInt(match.params.id)
-                let teacher = teachers.find(teacher => teacher.id === id)
-                return <TeacherCard teacher={teacher}/> 
-            } } />
+        return (
+            <>
+                <Switch>
+                    <Route path="/instructors/create" render={() => <Form submitHandler={submitHandler}/> } />
+                    <Route exact path="/instructors/:id" render={ ({match}) => {
+                        let id = parseInt(match.params.id)
+                        let instructor = instructors.find(instructor => instructor.id === id)
+                        return <Instructor instructor={instructor}/> 
+                    } } />
+                    <Route exact path="/instructors">
+                        <>
+                            <h1>Instructors</h1>
+                            <Search searchHandler={searchHandler} searchValue={searchValue}/>
+                            {instructorCards} 
+                        </>
+                    </Route>
+                </Switch>
+            </>
+        ) 
+    }
 
-
-{/* 
-            <h1>Instructors</h1>
-            {teacherCards} */}
-        </>
-    ) 
 }
-
 
 export default InstructorContainer
